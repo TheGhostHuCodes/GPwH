@@ -19,15 +19,10 @@ names = [("Ian", "Curtis"),
          ("Stephen","Morris"),
          ("Steve","Morris")]
 
-compareLastNames name1 name2 = if lastName1 > lastName2
-                               then GT
-                               else if lastName1 < lastName2
-                                    then LT
-                                    else if firstName1 > firstName2
-                                         then GT
-                                         else if firstName1 < firstName2
-                                              then LT
-                                              else EQ
+-- Question 4.1
+compareLastNames name1 name2 = if compare lastName1 lastName2 /= EQ
+                               then compare lastName1 lastName2
+                               else compare firstName1 firstName2
     where lastName1 = snd name1
           lastName2 = snd name2
           firstName1 = fst name1
@@ -47,10 +42,15 @@ nyOffice name = nameText ++ ": PO Box 789 - New York, NY, 10013"
 renoOffice name = nameText ++ " - PO Box 456 - Reno, NV 89523"    
     where nameText = snd name
 
+-- Question 4.2
+dcOffice name = nameText ++ " - 1600 Pennsylvania Ave NW - Washington, DC 20500"
+    where nameText = (fst name) ++ " " ++ (snd name) ++ ", Esq."
+
 getLocationFunction location = case location of
     "ny" -> nyOffice
     "sf" -> sfOffice
     "reno" -> renoOffice
+    "dc" -> dcOffice
     _ -> (\name -> (fst name) ++ " " ++ (snd name))
 
 addressLetter name location = locationFunction name
