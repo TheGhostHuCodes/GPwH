@@ -84,3 +84,26 @@ jackieSmith = Patient { name = Name "Jackie" "Smith"
                       , bloodType = BloodType O Neg }
 
 jackieSmithUpdated = jackieSmith { age = 44 }
+
+-- Question 12.1
+canDonateBlood :: Patient -> Patient -> Bool
+canDonateBlood p1 p2 = canDonateTo (bloodType p1) (bloodType p2)
+
+-- Question 12.1
+showNameLastFirst :: Name -> String
+showNameLastFirst (Name f l) = l ++ ", " ++ f
+showNameLastFirst (NameWithMiddle f m l) = l ++ ", " ++ f ++ " " ++ m
+
+showSex:: Sex -> String
+showSex Male = "Male"
+showSex Female = "Female"
+
+patientSummary :: Patient -> String
+patientSummary p = "**************\n"
+                   ++ "Patient Name: " ++ (showNameLastFirst (name p)) ++ "\n"
+                   ++ "Sex: " ++ showSex (sex p) ++ "\n"
+                   ++ "Age: " ++ show (age p) ++ "\n"
+                   ++ "Height: " ++ show (height p) ++ " in.\n"
+                   ++ "Weight: " ++ show (weight p) ++ " lbs.\n"
+                   ++ "Blood Type: " ++ showBloodType (bloodType p) ++ "\n"
+                   ++ "**************"
