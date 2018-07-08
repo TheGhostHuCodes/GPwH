@@ -1,3 +1,5 @@
+import Data.Char
+
 data FourLetterAlphabet = L1 | L2 | L3 | L4 deriving (Show, Enum, Bounded)
 
 rotN :: (Bounded a, Enum a) => Int -> a -> a
@@ -126,3 +128,38 @@ instance Cipher OneTimePad where
 
 myOTP :: OneTimePad
 myOTP = OTP (cycle [minBound .. maxBound])
+
+prng :: Int -> Int -> Int -> Int -> Int
+prng a b maxNumber seed = (a * seed + b) `mod` maxNumber
+
+examplePRNG :: Int -> Int
+examplePRNG = prng 1337 7 100
+
+myPRNG :: Int -> Int
+myPRNG = prng 1337 7 (ord (maxBound :: Char))
+
+randList :: Int -> Int -> [Int]
+randList seed 0 = []
+randList seed n = randNum : randList randNum (n - 1)
+    where randNum = myPRNG seed
+
+data StreamCipher = SC Int
+
+instance Cipher StreamCipher where
+    encode (SC seed) text = applySC seed text
+    decode (SC seed) text = applySC seed text
+
+mySC :: StreamCipher
+mySC = SC 42
+
+applySC' :: Int -> String -> [Bits]
+applySC' seed plaintext = map (\pair ->
+                                (fst pair) `xor` (snd pair))
+                          (zip randPadBits plaintextBits)
+    where randPad = randList seed (length plaintext)
+          randPadBits = map intToBits randPad
+          plaintextBits = map charToBits plaintext
+
+applySC :: Int -> String -> String
+applySC seed plaintext = map bitsToChar bitList
+    where bitList = applySC' seed plaintext
