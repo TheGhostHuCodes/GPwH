@@ -1,6 +1,8 @@
 simple x = x
 
-class Describable a where
-    describe :: a -> String
+addThenDouble :: Num a => a -> a -> a
+addThenDouble x y = (x + y) * 2
 
-data Icecream = Chocolate | Vanilla deriving (Show, Eq, Ord)
+class Describable a where describe :: a -> String
+
+data IceCream = Chocolate | Vanilla deriving (Show, Eq, Ord)
