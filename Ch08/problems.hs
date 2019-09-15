@@ -1,7 +1,7 @@
 -- Question 8.1
-myReverse [] = []
-myReverse (x:[]) = [x]
-myReverse (x:xs) = (myReverse xs) ++ [x]
+myReverse []       = []
+myReverse [x     ] = [x]
+myReverse (x : xs) = myReverse xs ++ [x]
 
 -- Question 8.2
 fastFib _ _ 0 = 0
