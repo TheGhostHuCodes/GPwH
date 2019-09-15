@@ -1,22 +1,15 @@
 inc n = n + 1
 
-ifEven fn x = if even x
-              then fn x
-              else x                
+ifEven fn x = if even x then fn x else x
 
-genIfEven f = (\x -> ifEven f x)
+genIfEven f = \x -> ifEven f x
 
 ifEvenInc = genIfEven inc
 
-genIfXEven x = (\f -> ifEven f x)
+genIfXEven x = \f -> ifEven f x
 
-getRequestUrl host apiKey resource id = host
-                                        ++ "/"
-                                        ++ resource
-                                        ++ "/"
-                                        ++ id
-                                        ++ "?token="
-                                        ++ apiKey
+getRequestUrl host apiKey resource id =
+  host ++ "/" ++ resource ++ "/" ++ id ++ "?token=" ++ apiKey
 
 exampleUrlBuilder = getRequestUrl "http://example.com"
 myExampleUrlBuilder = exampleUrlBuilder "1337hAsk311"
