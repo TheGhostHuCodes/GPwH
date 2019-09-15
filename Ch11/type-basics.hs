@@ -22,7 +22,7 @@ testScores = [0.99, 0.7, 0.8]
 letters :: [Char]
 letters = ['a', 'b', 'c']
 
-aPet ::[Char]
+aPet :: [Char]
 aPet = "cat"
 
 anotherPet :: String
@@ -41,10 +41,11 @@ double :: Int -> Int
 double n = n * 2
 
 half :: Int -> Double
-half n = (fromIntegral n) / 2
+half n = fromIntegral n / 2
 
+-- Quick Check 11.1
 halve :: Integer -> Integer
-halve n = div n 2
+halve n = n `div` 2
 
 printDouble :: Int -> String
 printDouble n = show (n * 2)
@@ -58,14 +59,10 @@ anotherNumber = read "6"
 makeAddress :: Int -> String -> String -> (Int, String, String)
 makeAddress number street town = (number, street, town)
 
-makeAddressLambda = (\number ->
-                        (\street ->
-                            (\town -> (number, street, town))))
+makeAddressLambda = (\number -> (\street -> (\town -> (number, street, town))))
 
 ifEven :: (Int -> Int) -> Int -> Int
-ifEven fn n = if even n
-              then fn n
-              else n
+ifEven fn n = if even n then fn n else n
 
 simple :: a -> a
 simple x = x
