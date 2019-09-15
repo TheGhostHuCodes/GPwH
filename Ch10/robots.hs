@@ -6,20 +6,18 @@ data Robot = Robot { name :: Name
 } deriving (Show)
 
 setName :: Robot -> Name -> Robot
-setName r newName = r { name = newName}
+setName r newName = r { name = newName }
 setAttack :: Robot -> Integer -> Robot
 setAttack r newAttack = r { attack = newAttack }
 setHP :: Robot -> Integer -> Robot
 setHP r newHP = r { hp = newHP }
 
 damage :: Robot -> Integer -> Robot
-damage r attackDamage = r { hp = (hp r) - attackDamage }
+damage r attackDamage = r { hp = hp r - attackDamage }
 
 fight :: Robot -> Robot -> Robot
 fight attacker defender = damage defender attackDamage
-    where attackDamage = if (hp attacker) > 0
-                         then attack attacker
-                         else 0
+  where attackDamage = if hp attacker > 0 then attack attacker else 0
 
 killerRobot = Robot "Kill3r" 25 200
 nicerRobot = setName killerRobot "kitty"
@@ -50,13 +48,12 @@ life = map hp [killerRobot, nicerRobot, gentlerRobot, softerRobot, gentleGiant]
 -- three rounds, returning the winner. To avoid having so many different
 -- variables for robot state, use a series of nested lambda functions so you can
 -- just overwrite robotA and robotB.
-
-threeRoundFight a b = if (hp aFinal) > (hp bFinal)
-                      then aFinal
-                      else bFinal
-    where (aFinal, bFinal) = (\(r1, r2) -> ((fight r2 r1), (fight r1 r2)))
-                                ((\(r1, r2) -> ((fight r2 r1), (fight r1 r2)))
-                                    ((\(r1, r2) -> ((fight r2 r1), (fight r1 r2))) (a, b)))
+threeRoundFight a b = if hp aFinal > hp bFinal then aFinal else bFinal
+ where
+  (aFinal, bFinal) = (\(r1, r2) -> (fight r2 r1, fight r1 r2))
+    ((\(r1, r2) -> (fight r2 r1, fight r1 r2))
+      ((\(r1, r2) -> (fight r2 r1, fight r1 r2)) (a, b))
+    )
 
 -- Create a list of three robots. Then create a fourth robot. Use partial
 -- application to create a closure for the fight method so the fourth robot can
